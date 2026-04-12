@@ -193,6 +193,11 @@ def scan():
     return render_template("index.html")
 
 
+@app.route("/disclaimer")
+def disclaimer():
+    return render_template("disclaimer.html")
+
+
 @app.route("/api/predict", methods=["POST"])
 @rate_limit
 def api_predict():
