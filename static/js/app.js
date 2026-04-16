@@ -28,17 +28,17 @@
 
     // ── Particles Background ───────────────────────
     function spawnParticles() {
-        const colors = ['rgba(251,155,143,0.15)', 'rgba(245,119,153,0.12)', 'rgba(253,195,161,0.1)'];
-        for (let i = 0; i < 25; i++) {
+        const colors = ['rgba(0,229,180,0.07)', 'rgba(43,158,248,0.05)', 'rgba(0,229,180,0.04)'];
+        for (let i = 0; i < 18; i++) {
             const p = document.createElement('div');
             p.classList.add('particle');
-            const size = Math.random() * 4 + 2;
+            const size = Math.random() * 3 + 1.5;
             p.style.width = size + 'px';
             p.style.height = size + 'px';
             p.style.left = Math.random() * 100 + '%';
             p.style.background = colors[Math.floor(Math.random() * colors.length)];
-            p.style.animationDuration = (Math.random() * 20 + 15) + 's';
-            p.style.animationDelay = (Math.random() * 15) + 's';
+            p.style.animationDuration = (Math.random() * 25 + 18) + 's';
+            p.style.animationDelay = (Math.random() * 18) + 's';
             particlesEl.appendChild(p);
         }
     }

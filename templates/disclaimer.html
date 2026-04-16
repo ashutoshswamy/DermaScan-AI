@@ -7,83 +7,127 @@
     <meta name="description" content="Medical disclaimer and terms of use for DermaScan AI." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
     <style>
-        .page-content {
-            max-width: 800px;
-            margin: 40px auto;
-            padding: 40px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: var(--radius-xl);
+        .page-wrap {
+            max-width: 760px;
+            margin: 40px auto 80px;
+            padding: 0 24px;
             position: relative;
             z-index: 1;
-            box-shadow: var(--shadow-glow);
+            animation: fadeInUp 0.5s ease both;
         }
-        .page-content h2 {
-            margin-top: 30px;
-            margin-bottom: 15px;
-            font-size: 1.5rem;
-            color: var(--text-primary);
+
+        .page-header {
+            margin-bottom: 32px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid var(--border-color);
         }
-        .page-content h2:first-child {
-            margin-top: 0;
-            font-size: 2rem;
-            text-align: center;
-            margin-bottom: 30px;
+
+        .page-header__eyebrow {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.65rem;
+            letter-spacing: 0.12em;
+            color: var(--accent-teal);
+            text-transform: uppercase;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        .page-content p, .page-content ul {
-            margin-bottom: 20px;
-            line-height: 1.8;
-            color: var(--text-secondary);
+
+        .page-header__eyebrow::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 1px;
+            background: var(--accent-teal);
+            opacity: 0.6;
         }
-        .page-content ul {
-            padding-left: 20px;
-        }
-        .page-content li {
-            margin-bottom: 10px;
-        }
-        .page-content strong {
+
+        .page-header h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
             color: var(--text-primary);
         }
 
-        /* ── Responsive ─── */
+        .disclaimer-section {
+            margin-bottom: 24px;
+            padding: 22px 24px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            position: relative;
+        }
+
+        .disclaimer-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 3px; bottom: 0;
+            background: var(--accent-teal);
+            border-radius: 3px 0 0 3px;
+            opacity: 0.4;
+        }
+
+        .disclaimer-section h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            letter-spacing: -0.01em;
+        }
+
+        .disclaimer-section p,
+        .disclaimer-section ul {
+            font-size: 0.875rem;
+            line-height: 1.85;
+            color: var(--text-secondary);
+        }
+
+        .disclaimer-section ul {
+            padding-left: 18px;
+        }
+
+        .disclaimer-section li {
+            margin-bottom: 6px;
+        }
+
+        .disclaimer-section strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .disclaimer-section:nth-child(3)::before { background: var(--risk-precancer); }
+        .disclaimer-section:nth-child(4)::before { background: var(--risk-benign); }
+        .disclaimer-section:nth-child(5)::before { background: var(--risk-malignant); }
+        .disclaimer-section:nth-child(6)::before { background: var(--accent-blue); }
+
+        .section-num {
+            font-family: 'Space Mono', monospace;
+            font-size: 0.62rem;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 6px;
+        }
+
         @media (max-width: 768px) {
-            .page-content {
-                margin: 20px;
-                padding: 24px;
-                border-radius: var(--radius-lg);
-            }
-            .page-content h2:first-child {
-                font-size: 1.6rem;
-                margin-bottom: 20px;
-            }
-            .page-content h2 {
-                font-size: 1.3rem;
-                margin-top: 24px;
-            }
-            .page-content p, .page-content ul {
-                font-size: 0.95rem;
-                line-height: 1.7;
-            }
+            .page-wrap { margin: 24px auto 60px; padding: 0 16px; }
+            .page-header h2 { font-size: 1.7rem; }
+            .disclaimer-section { padding: 18px 20px; }
         }
 
         @media (max-width: 480px) {
-            .page-content {
-                margin: 16px;
-                padding: 20px;
-            }
-            .page-content h2:first-child {
-                font-size: 1.4rem;
-            }
-            .page-content h2 {
-                font-size: 1.15rem;
-                margin-top: 20px;
-            }
-            .page-content p, .page-content ul {
-                font-size: 0.9rem;
-            }
+            .page-wrap { margin: 16px auto 48px; padding: 0 12px; }
+            .page-header h2 { font-size: 1.5rem; }
+            .disclaimer-section { padding: 16px 16px; }
+            .disclaimer-section h3 { font-size: 0.9rem; }
+            .disclaimer-section p,
+            .disclaimer-section ul { font-size: 0.83rem; }
         }
     </style>
 </head>
@@ -95,41 +139,58 @@
             <div class="header__brand">
                 <div class="header__icon">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M6 18h8"/>
-                    <path d="M3 22h18"/>
-                    <path d="M14 22a7 7 0 1 0 0-14h-1"/>
-                    <path d="M9 14h2"/>
-                    <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/>
-                    <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/>
-                </svg>
+                        <path d="M6 18h8"/><path d="M3 22h18"/>
+                        <path d="M14 22a7 7 0 1 0 0-14h-1"/>
+                        <path d="M9 14h2"/>
+                        <path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/>
+                        <path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"/>
+                    </svg>
                 </div>
                 <div>
                     <h1 class="header__title">DermaScan AI</h1>
-                    <p class="header__subtitle">Intelligent Skin Lesion Analysis</p>
+                    <p class="header__subtitle">LEGAL DISCLAIMER</p>
                 </div>
             </div>
-            <a href="/" style="font-size:0.8rem;color:var(--text-secondary);text-decoration:none;font-weight:500;padding:6px 14px;border-radius:9999px;border:1px solid var(--border-color);transition:0.2s ease;">← Home</a>
+            <a href="/" class="nav-back">← HOME</a>
         </div>
     </header>
 
     <main class="main">
-        <div class="page-content">
-            <h2>Medical Disclaimer</h2>
-            
-            <p><strong>1. Not Medical Advice</strong><br>
-            The information, including but not limited to, text, graphics, images and other material contained on this website are for educational and screening purposes only. DermaScan AI is <strong>not</strong> intended to be a substitute for professional medical advice, diagnosis, or treatment.</p>
+        <div class="page-wrap">
+            <div class="page-header">
+                <div class="page-header__eyebrow">LEGAL DOCUMENT · READ BEFORE USE</div>
+                <h2>Medical Disclaimer</h2>
+            </div>
 
-            <p><strong>2. Accuracy & Reliability</strong><br>
-            While this tool utilizes advanced deep learning models trained on the HAM10000 dataset, it is not perfect. AI models can produce false positives (indicating severe issues when there are none) and false negatives (missing actual severe issues). You should never disregard professional medical advice or delay in seeking it because of something you have read or processed on this website.</p>
+            <div class="disclaimer-section">
+                <div class="section-num">01 / NOT MEDICAL ADVICE</div>
+                <h3>Purpose & Scope</h3>
+                <p>The information, including but not limited to text, graphics, images and other material contained on this website are for <strong>educational and screening purposes only</strong>. DermaScan AI is <strong>not</strong> intended to be a substitute for professional medical advice, diagnosis, or treatment.</p>
+            </div>
 
-            <p><strong>3. Consult a Physician</strong><br>
-            Always seek the advice of your physician, dermatologist, or other qualified health provider with any questions you may have regarding a medical condition. If you think you may have a medical emergency, call your doctor or emergency services immediately.</p>
+            <div class="disclaimer-section">
+                <div class="section-num">02 / ACCURACY</div>
+                <h3>Accuracy &amp; Reliability</h3>
+                <p>While this tool utilizes advanced deep learning models trained on the HAM10000 dataset, it is not perfect. AI models can produce <strong>false positives</strong> (indicating severe issues when there are none) and <strong>false negatives</strong> (missing actual severe conditions). Never disregard professional medical advice or delay seeking it because of something processed on this website.</p>
+            </div>
 
-            <p><strong>4. No Doctor-Patient Relationship</strong><br>
-            Use of this website and the AI screening tool does not establish a doctor-patient relationship between you and any healthcare provider, nor between you and the developers of DermaScan AI.</p>
+            <div class="disclaimer-section">
+                <div class="section-num">03 / CONSULT A PHYSICIAN</div>
+                <h3>Seek Professional Advice</h3>
+                <p>Always seek the advice of your physician, dermatologist, or other qualified health provider with any questions you may have regarding a medical condition. If you think you may have a medical emergency, <strong>call your doctor or emergency services immediately</strong>.</p>
+            </div>
 
-            <p><strong>5. Limitation of Liability</strong><br>
-            By using this tool, you understand and agree that the creators and maintainers of DermaScan AI shall not be liable for any direct, indirect, incidental, consequential, or exemplary damages, including but not limited to, damages for loss of profits, goodwill, use, data or other intangible losses resulting from the use or the inability to use the service.</p>
+            <div class="disclaimer-section">
+                <div class="section-num">04 / NO RELATIONSHIP</div>
+                <h3>No Doctor-Patient Relationship</h3>
+                <p>Use of this website and the AI screening tool does <strong>not</strong> establish a doctor-patient relationship between you and any healthcare provider, nor between you and the developers of DermaScan AI.</p>
+            </div>
+
+            <div class="disclaimer-section">
+                <div class="section-num">05 / LIABILITY</div>
+                <h3>Limitation of Liability</h3>
+                <p>By using this tool, you understand and agree that the creators and maintainers of DermaScan AI shall <strong>not be liable</strong> for any direct, indirect, incidental, consequential, or exemplary damages, including but not limited to damages for loss of profits, goodwill, use, data or other intangible losses resulting from the use or inability to use the service.</p>
+            </div>
         </div>
     </main>
 
@@ -139,41 +200,38 @@
                 <strong>⚠ Medical Disclaimer:</strong> This tool is for <strong>educational and screening purposes only</strong>.
                 It is <strong>NOT</strong> a substitute for professional medical diagnosis.
                 Always consult a qualified dermatologist for clinical evaluation.
-                <br>
-                <a href="/disclaimer" style="color: inherit; text-decoration: underline; margin-top: 8px; display: inline-block;">Read Full Disclaimer</a>
             </p>
             <div class="footer__socials">
                 <a href="https://linkedin.com/in/ashutoshswamy" target="_blank" rel="noopener" class="footer__social-link" title="LinkedIn">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                 </a>
                 <a href="https://github.com/ashutoshswamy" target="_blank" rel="noopener" class="footer__social-link" title="GitHub">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
                 </a>
                 <a href="https://ashutoshswamy.in" target="_blank" rel="noopener" class="footer__social-link" title="Portfolio">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
                 </a>
             </div>
-            <p class="footer__copyright">Built by Ashutosh Swamy • Powered by HAM10000 Dataset & Deep Learning</p>
+            <p class="footer__copyright">BUILT BY ASHUTOSH SWAMY · HAM10000 DATASET · DEEP LEARNING</p>
         </div>
     </footer>
 
     <script>
         (function() {
             const particlesEl = document.getElementById('particles');
-            const colors = ['rgba(251,155,143,0.15)', 'rgba(245,119,153,0.12)', 'rgba(253,195,161,0.1)'];
-            for (let i = 0; i < 25; i++) {
+            if (!particlesEl) return;
+            const colors = ['rgba(0,229,180,0.07)', 'rgba(43,158,248,0.05)', 'rgba(0,229,180,0.04)'];
+            for (let i = 0; i < 16; i++) {
                 const p = document.createElement('div');
                 p.classList.add('particle');
-                const size = Math.random() * 4 + 2;
+                const size = Math.random() * 3 + 1.5;
                 p.style.width = size + 'px';
                 p.style.height = size + 'px';
                 p.style.left = Math.random() * 100 + '%';
                 p.style.background = colors[Math.floor(Math.random() * colors.length)];
-                p.style.animationDuration = (Math.random() * 20 + 15) + 's';
-                p.style.animationDelay = (Math.random() * 15) + 's';
-                if (particlesEl) {
-                    particlesEl.appendChild(p);
-                }
+                p.style.animationDuration = (Math.random() * 25 + 18) + 's';
+                p.style.animationDelay = (Math.random() * 18) + 's';
+                particlesEl.appendChild(p);
             }
         })();
     </script>
