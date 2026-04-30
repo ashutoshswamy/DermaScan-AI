@@ -2,7 +2,7 @@
 
 AI-powered skin lesion classification web application. Upload a dermoscopic image and get instant analysis across **8 lesion types** with risk assessment, confidence scores, and clinical guidance.
 
-Built with **Flask**, **PyTorch**, and a fine-tuned **Vision Transformer** trained on the [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T) dermatological dataset.
+Built with **Streamlit**, **PyTorch**, and a fine-tuned **Vision Transformer** trained on the [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T) dermatological dataset.
 
 > ⚠️ **Medical Disclaimer:** This tool is for **educational and screening purposes only**. It is **NOT** a substitute for professional medical diagnosis. Always consult a qualified dermatologist.
 
@@ -37,10 +37,10 @@ cd skin-cancer-detection
 pip install -r requirements.txt
 
 # Run the app
-python app.py
+streamlit run streamlit_app.py
 ```
 
-Open **http://localhost:3000** in your browser.
+Streamlit will print a local URL (typically **http://localhost:8501**) in the terminal.
 
 > 📝 The model (~85 MB) downloads automatically on first run. An internet connection is required for the initial setup.
 
@@ -50,7 +50,8 @@ Open **http://localhost:3000** in your browser.
 
 ```
 skin-cancer-detection/
-├── app.py                    # Flask backend (routes, API, model inference)
+├── streamlit_app.py          # Streamlit app (UI + model inference)
+├── app.py                    # Flask backend (legacy)
 ├── skin_cancer_detector.py   # Original CLI script
 ├── requirements.txt          # Python dependencies
 ├── templates/

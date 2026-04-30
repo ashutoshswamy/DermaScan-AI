@@ -1,5 +1,6 @@
 flask
 gunicorn
+streamlit
 transformers
 Pillow
 --extra-index-url https://download.pytorch.org/whl/cpu
