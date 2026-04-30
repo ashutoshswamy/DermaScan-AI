@@ -1,79 +1,70 @@
-# 🔬 DermaScan AI — Skin Cancer Detection
+# DermaScan AI - Skin Cancer Detection
 
-AI-powered skin lesion classification web application. Upload a dermoscopic image and get instant analysis across **8 lesion types** with risk assessment, confidence scores, and clinical guidance.
+DermaScan AI is a skin lesion classification project that analyzes dermoscopic images and returns the most likely class, confidence score, and basic clinical context for each prediction.
 
-Built with **Streamlit**, **PyTorch**, and a fine-tuned **Vision Transformer** trained on the [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T) dermatological dataset.
+The project includes two ways to run the app:
 
-> ⚠️ **Medical Disclaimer:** This tool is for **educational and screening purposes only**. It is **NOT** a substitute for professional medical diagnosis. Always consult a qualified dermatologist.
+- `streamlit_app.py` for a simple Streamlit interface
+- `app.py` for the Flask web app with HTML templates, static assets, and an `/api/predict` endpoint
 
----
+It uses a fine-tuned Vision Transformer model from Hugging Face and the HAM10000 dermatology dataset.
 
-## ✨ Features
+> Medical disclaimer: this project is for educational and screening purposes only. It is not a substitute for professional medical diagnosis. Always consult a qualified dermatologist.
 
-- **8-Class Classification** — Identifies actinic keratosis, basal cell carcinoma, dermatofibroma, melanoma, nevus, pigmented benign keratosis, squamous cell carcinoma, and vascular lesions
-- **Risk Assessment** — Each prediction includes a risk level (🟢 Benign / 🟡 Pre-cancerous / 🔴 Malignant) with clinical context
-- **Drag & Drop Upload** — Intuitive image upload with preview and file validation
-- **Instant Results** — Classification in under 3 seconds with animated confidence bars
-- **Modern Dark UI** — Premium glassmorphism design with warm color palette
-- **Security Hardened** — Rate limiting, MIME validation, security headers, safe error handling
+## Features
 
----
+- 8-class skin lesion classification
+- Confidence scores for the top predictions
+- Risk labels with short clinical descriptions and recommendations
+- Image validation and temporary upload cleanup in the Flask app
+- Rate limiting and basic security headers on the prediction endpoint
+- Streamlit and Flask entry points for different deployment styles
 
-## 🚀 Quick Start
+## Requirements
 
-### Prerequisites
-
-- Python 3.10+
+- Python 3.10 or newer
 - pip
+- Internet access on first run so the model can download from Hugging Face
 
-### Installation
+## Installation
 
 ```bash
-# Clone the repository
 git clone https://github.com/ashutoshswamy/skin-cancer-detection.git
 cd skin-cancer-detection
-
-# Install dependencies
 pip install -r requirements.txt
+```
 
-# Run the app
+## Run the apps
+
+### Streamlit UI
+
+```bash
 streamlit run streamlit_app.py
 ```
 
-Streamlit will print a local URL (typically **http://localhost:8501**) in the terminal.
+Streamlit usually opens at `http://localhost:8501`.
 
-> 📝 The model (~85 MB) downloads automatically on first run. An internet connection is required for the initial setup.
+### Flask web app
 
----
-
-## 📁 Project Structure
-
-```
-skin-cancer-detection/
-├── streamlit_app.py          # Streamlit app (UI + model inference)
-├── app.py                    # Flask backend (legacy)
-├── skin_cancer_detector.py   # Original CLI script
-├── requirements.txt          # Python dependencies
-├── templates/
-│   ├── home.html             # Landing page
-│   └── index.html            # Scan / analysis page
-├── static/
-│   ├── css/style.css         # Design system (dark mode, warm palette)
-│   └── js/app.js             # Client-side logic (upload, results)
-└── uploads/                  # Temporary upload dir (auto-cleaned)
+```bash
+python app.py
 ```
 
----
+The Flask app runs on `http://localhost:3000` by default.
 
-## 🔌 API
+## API
 
-### `POST /api/predict`
+The Flask app exposes a prediction endpoint.
 
-Upload an image for classification.
+`POST /api/predict`
 
-**Request:** `multipart/form-data` with field `image`
+Request format:
 
-**Response:**
+- `multipart/form-data`
+- field name: `image`
+
+Example response:
+
 ```json
 {
   "success": true,
@@ -82,67 +73,52 @@ Upload an image for classification.
       "label": "melanoma",
       "confidence": 87.34,
       "risk": "Malignant",
-      "description": "Most dangerous skin cancer...",
-      "recommendation": "Urgent: Consult a dermatologist..."
+      "description": "Most dangerous skin cancer. Early detection is critical for survival.",
+      "recommendation": "Urgent: Consult a dermatologist or oncologist immediately."
     }
   ]
 }
 ```
 
-**Limits:** Max file size 10 MB · 20 requests/min per IP · Accepts JPG, PNG, BMP, TIFF, WebP
+Limits and validation:
 
----
+- Maximum file size: 10 MB
+- Rate limit: 20 requests per minute per IP
+- Allowed image types: JPG, PNG, BMP, TIFF, WebP
 
-## 🔒 Security
+## Project Structure
 
-| Feature | Description |
-|---------|-------------|
-| **Security Headers** | X-Content-Type-Options, X-Frame-Options, X-XSS-Protection, Referrer-Policy, Permissions-Policy |
-| **Rate Limiting** | 20 requests per minute per IP on the prediction endpoint |
-| **MIME Validation** | Checks both file extension and content type |
-| **Image Verification** | Validates uploaded files are actual images using PIL |
-| **Safe Errors** | Internal exceptions are never exposed to the client |
-| **Upload Cleanup** | Temporary files are always deleted after processing |
-| **Secret Key** | Auto-generated or set via `SECRET_KEY` environment variable |
-| **Localhost Binding** | Server binds to `127.0.0.1` by default (not exposed to network) |
+```text
+skin cancer detection/
+├── app.py                 # Flask app and API
+├── streamlit_app.py       # Streamlit UI
+├── skin_cancer_detector.py # Original CLI script
+├── requirements.txt       # Python dependencies
+├── templates/             # Flask HTML templates
+├── static/                # CSS and JavaScript assets
+└── uploads/               # Temporary upload directory
+```
 
----
+## Model Classes
 
-## 🎨 Classification Types
+- Actinic keratosis - Pre-cancerous
+- Basal cell carcinoma - Malignant
+- Dermatofibroma - Benign
+- Melanoma - Malignant
+- Nevus - Benign
+- Pigmented benign keratosis - Benign
+- Squamous cell carcinoma - Malignant
+- Vascular lesion - Benign
 
-| Condition | Risk Level |
-|-----------|-----------|
-| Actinic Keratosis | 🟡 Pre-cancerous |
-| Basal Cell Carcinoma | 🔴 Malignant |
-| Dermatofibroma | 🟢 Benign |
-| Melanoma | 🔴 Malignant |
-| Nevus (Mole) | 🟢 Benign |
-| Pigmented Benign Keratosis | 🟢 Benign |
-| Squamous Cell Carcinoma | 🔴 Malignant |
-| Vascular Lesion | 🟢 Benign |
+## Tech Stack
 
----
+- Flask
+- Streamlit
+- PyTorch
+- Hugging Face Transformers
+- Pillow
+- HTML, CSS, and JavaScript
 
-## 🛠 Tech Stack
+## License
 
-- **Backend:** Flask (Python)
-- **ML Model:** HuggingFace Transformers (Vision Transformer)
-- **Frontend:** Vanilla HTML, CSS, JavaScript
-- **Font:** [Poppins](https://fonts.google.com/specimen/Poppins)
-- **Dataset:** [HAM10000](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/DBW86T)
-
----
-
-## 👤 Author
-
-**Ashutosh Swamy**
-
-- 🌐 [ashutoshswamy.in](https://ashutoshswamy.in)
-- 💼 [LinkedIn](https://linkedin.com/in/ashutoshswamy)
-- 🐙 [GitHub](https://github.com/ashutoshswamy)
-
----
-
-## 📄 License
-
-This project is for educational purposes. The model and dataset are subject to their respective licenses.
+This project is intended for educational use. The model and dataset are subject to their respective licenses.
